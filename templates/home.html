@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login & Registration</title>
-    <link rel="stylesheet" href="static/css/styles.css">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-  <h1>WELCOME</h1>
+    <div class="container">
+        <h1>Welcome, {{ name }}!</h1>
+        <p>You are successfully logged in.</p>
+        <!-- Add more content for the logged-in user here -->
+    </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 
 # App initialization
 app = Flask(__name__)
@@ -9,7 +9,8 @@ data = [
     ["Alice", "password123"],
     ["Bob", "qwerty"],
     ["Charlie", "12345"],
-    ["David", "pass123"]
+    ["David", "pass123"],
+    ["admin", "admin"],
 ]
 
 # Helper function to check if user exists
@@ -29,16 +30,21 @@ def home():
         
         if user and user[1] == password:
             flash('Login successful!', 'success')
+            session['username'] = username
             return redirect(url_for('login'))
         else:
             flash('Invalid username or password. Please try again or register if you do not have an account.', 'danger')
-            return redirect(url_for('register'))
+            return redirect(url_for('home'))
         
     return render_template('index.html')
 
 @app.route('/login')
 def login():
-    return render_template('home.html')
+    username = session.get('username')
+    if username:
+        return render_template('home.html', name=username)
+    else:
+        return redirect(url_for('home'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
